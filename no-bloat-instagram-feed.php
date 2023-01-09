@@ -2,7 +2,7 @@
 /*
 Plugin Name: No Bloat Instagram Feed
 Description: Access your Instagram feed easily through a single php function
-Version:     1.0.0
+Version:     1.0.1
 Author:      Dylan Blokhuis
 */
 
@@ -32,6 +32,8 @@ function nbif_refresh_access_token($access_token) {
   }
 
   $refresh_token_response_body = json_decode($refresh_token_response['body']);
+
+  update_option(nbif_option_key(), $refresh_token_response_body->access_token);
   $date = new DateTime();
   $date->add(new DateInterval('PT' . $refresh_token_response_body->expires_in . 'S'));
   return $date->getTimestamp();
